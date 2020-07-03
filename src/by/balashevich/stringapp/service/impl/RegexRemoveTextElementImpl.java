@@ -8,8 +8,10 @@ import java.util.regex.Pattern;
 
 public class RegexRemoveTextElementImpl implements RemoveTextElement {
     private static final String VOWELS = "aeiouyAEIOUYуеыаоэяиюУЕЫАОЭЯИЮ";
-    private static final String SYMBOL_EXCEPT_LETTER = "[^\\p{L}]\\p{Space}?";
+    private static final String SYMBOL_EXCEPT_LETTER = "[\\p{Punct}\\p{Digit}]";
+    private static final String SYMBOL_BETWEEN_LETTER = "(\\p{L})(" + SYMBOL_EXCEPT_LETTER + ")(\\p{L})";
     private static final String WORD_CERTAIN_LENGTH = "\\b(\\p{L})\\p{L}{%d}\\b";
+    private static final String REPLACE_GROUP = "$1%s$3";
     private static final String SPACE = " ";
     private static final String BLANK = "";
 
@@ -19,9 +21,13 @@ public class RegexRemoveTextElementImpl implements RemoveTextElement {
             throw new ProjectInvalidDataException("Invalid data for remove punctuation operation");
         }
 
-        Pattern pattern = Pattern.compile(SYMBOL_EXCEPT_LETTER);
+        Pattern pattern = Pattern.compile(SYMBOL_BETWEEN_LETTER);
         Matcher matcher = pattern.matcher(text);
-        text = matcher.replaceAll(SPACE);
+        text = matcher.replaceAll(String.format(REPLACE_GROUP, SPACE));
+
+        pattern = Pattern.compile(SYMBOL_EXCEPT_LETTER);
+        matcher = pattern.matcher(text);
+        text = matcher.replaceAll(BLANK);
 
         return text;
     }

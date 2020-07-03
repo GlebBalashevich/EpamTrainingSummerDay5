@@ -11,10 +11,9 @@ public class RegexReplaceTextElementImpl implements ReplaceTextElement {
     private static final String ORDINAL_LETTER = "\\b(\\p{L}{%d})(\\p{L})(\\p{L}*)";
     private static final String REPLACE_GROUP = "$1%s$3";
 
-
     @Override
     public String replaceLetters(String text, int position, char replacement) throws ProjectInvalidDataException {
-        if (text == null || position <= 0 || replacement <= 0) {
+        if (text == null || position <= 0) {
             throw new ProjectInvalidDataException("Invalid data for replace letter operation");
         }
 

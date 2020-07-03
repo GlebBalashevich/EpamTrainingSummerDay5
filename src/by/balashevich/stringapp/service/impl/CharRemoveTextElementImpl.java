@@ -6,9 +6,8 @@ import by.balashevich.stringapp.service.RemoveTextElement;
 public class CharRemoveTextElementImpl implements RemoveTextElement {
     private static final String SPACE = " ";
     private static final String BOUNDARY = "\\b";
-    private static final String NUMBER_LETTERS = "[\\p{L}|\\-]{%d}";
+    private static final String COUNT_LETTERS = "\\p{L}{%d}";
     private static final String VOWELS = "aeiouyAEIOUYуеыаоэяиюУЕЫАОЭЯИЮ";
-
 
     @Override
     public String removeNotLettersSymbols(String text) throws ProjectInvalidDataException {
@@ -20,7 +19,7 @@ public class CharRemoveTextElementImpl implements RemoveTextElement {
         StringBuilder stringBuilder = new StringBuilder();
 
         for (int i = 0; i < chars.length; i++) {
-            if (Character.isLetterOrDigit(chars[i]) || Character.isWhitespace(chars[i])) {
+            if (Character.isLetter(chars[i]) || Character.isWhitespace(chars[i])) {
                 stringBuilder.append(chars[i]);
             } else {
                 if (i - 1 >= 0 && i + 1 < chars.length) {
@@ -48,7 +47,7 @@ public class CharRemoveTextElementImpl implements RemoveTextElement {
             if (wordChars.length != wordLength) {
                 stringBuilder.append(wordChars);
             } else {
-                if (!word.matches(String.format(NUMBER_LETTERS, wordLength))) {
+                if (!word.matches(String.format(COUNT_LETTERS, wordLength))) {
                     stringBuilder.append(wordChars);
                 } else {
                     if (VOWELS.contains(String.valueOf(wordChars[0]))) {

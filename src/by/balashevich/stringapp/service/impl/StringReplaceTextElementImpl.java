@@ -5,18 +5,18 @@ import by.balashevich.stringapp.service.ReplaceTextElement;
 
 public class StringReplaceTextElementImpl implements ReplaceTextElement {
     private static final String BOUNDARY = "\\b";
-    private static final String LETTER = "\\p{L}+";
+    private static final String LETTERS = "\\p{L}+";
 
     @Override
     public String replaceLetters(String text, int position, char replacement) throws ProjectInvalidDataException {
-        if (text == null || position <= 0 || replacement <= 0) {
+        if (text == null || position <= 0) {
             throw new ProjectInvalidDataException("Invalid data for replace letter operation");
         }
 
         String[] words = text.split(BOUNDARY);
 
         for (String word : words) {
-            if (word.length() >= position && word.matches(LETTER)) {
+            if (word.length() >= position && word.matches(LETTERS)) {
                 String modifiedWord = word.substring(0, position - 1) + replacement + word.substring(position);
                 text = text.replace(word, modifiedWord);
             }
@@ -45,7 +45,7 @@ public class StringReplaceTextElementImpl implements ReplaceTextElement {
         String[] words = text.split(BOUNDARY);
 
         for (String word : words) {
-            if (word.length() == wordLength && word.matches(LETTER)) {
+            if (word.length() == wordLength && word.matches(LETTERS)) {
                 text = text.replace(word, replacement);
             }
         }
