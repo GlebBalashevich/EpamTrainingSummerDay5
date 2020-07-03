@@ -13,13 +13,13 @@ public class TextDataReader {
     private static final String DEFAULT_PATH = "input/textData.txt";
 
     public String readFileData(String filename) throws ProjectInvalidDataException {
-        Path path = Paths.get(DEFAULT_PATH);
+        Path path;
         String stringData;
 
-        if (filename != null) {
-            if (Files.exists(Paths.get(filename))) {
+        if (filename != null && Files.exists(Paths.get(filename))) {
                 path = Paths.get(filename);
-            }
+        } else{
+            path = Paths.get(DEFAULT_PATH);
         }
 
         try {

@@ -9,7 +9,7 @@ public class StringReplaceTextElementImpl implements ReplaceTextElement {
 
     @Override
     public String replaceLetters(String text, int position, char replacement) throws ProjectInvalidDataException {
-        if (text == null) {
+        if (text == null || position <= 0 || replacement <= 0) {
             throw new ProjectInvalidDataException("Invalid data for replace letter operation");
         }
 
@@ -38,7 +38,7 @@ public class StringReplaceTextElementImpl implements ReplaceTextElement {
 
     @Override
     public String replaceWordsOnSubstring(String text, int wordLength, String replacement) throws ProjectInvalidDataException {
-        if (text == null || replacement == null) {
+        if (text == null || wordLength <= 0 || replacement == null) {
             throw new ProjectInvalidDataException("Invalid data for replace word on substring operation");
         }
 

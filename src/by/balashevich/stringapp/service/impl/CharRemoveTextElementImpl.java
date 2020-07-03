@@ -36,7 +36,7 @@ public class CharRemoveTextElementImpl implements RemoveTextElement {
 
     @Override
     public String removeWordsCertainLength(String text, int wordLength) throws ProjectInvalidDataException {
-        if (text == null) {
+        if (text == null || wordLength <= 0) {
             throw new ProjectInvalidDataException("Invalid data for remove word operation");
         }
 
